@@ -2,7 +2,7 @@
 import './App.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Home from './components/home';
-import HospitalInfo from './components/hospitalInfo';
+import HospitalInfo, { UpdateForm } from './components/hospitalInfo';
 import AmbulanceInfo from './components/ambulanceInfo';
 
 function App() {
