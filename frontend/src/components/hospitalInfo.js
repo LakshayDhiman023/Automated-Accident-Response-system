@@ -4,24 +4,13 @@ import { useState, useEffect } from "react";
 export const UpdateForm = ({ hospitalInfoById, setShowUpdateForm }) => {
   // State variables to hold updated values
 
-  // console.log(hospitalInfoById);
+  console.log(hospitalInfoById);
   const [hospitalInfo, setHospitalInfo] = useState({
-    hospital_id:
-      hospitalInfoById.hospital_id === undefined
-        ? ""
-        : hospitalInfoById.hospital_id,
-    hospital_name:
-      hospitalInfoById.hospital_name === undefined
-        ? ""
-        : hospitalInfoById.hospital_name,
-    contact:
-      hospitalInfoById.contact === undefined ? "" : hospitalInfoById.contact,
-    latitude:
-      hospitalInfoById.latitude === undefined ? "" : hospitalInfoById.latitude,
-    longitude:
-      hospitalInfoById.longitude === undefined
-        ? ""
-        : hospitalInfoById.longitude,
+    hospital_id: hospitalInfoById.hospital_id,
+    hospital_name: hospitalInfoById.hospital_name,
+    contact: hospitalInfoById.contact,
+    latitude: hospitalInfoById.latitude,
+    longitude: hospitalInfoById.longitude,
   });
   // console.log(hospitalInfo);
 
@@ -146,12 +135,31 @@ const HospitalInfo = () => {
         const response = await axios.get(
           `http://localhost:8000/hospitalInfo/${hospital_id}`
         );
+        console.log(response);
         setHospitalInfoById(response.data[0]);
+        setShowUpdateForm(true);
       } catch (error) {
         console.log(error);
       }
     };
     getData();
+  };
+
+  const handleDelete = (hospital_id) => {
+    // console.log(hospital_id);
+    const deleteEntry = async () => {
+      try {
+        const response = await axios.delete(
+          `http://localhost:8000/hospitalInfo/${hospital_id}`
+        );
+        if (response.status == 200) {
+          window.location.reload(false);
+        }
+      } catch (error) {
+        console.log("Error while delete hospital information");
+      }
+    };
+    deleteEntry();
   };
 
   // console.log(hospitalInfoById);
@@ -213,13 +221,15 @@ const HospitalInfo = () => {
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
                     onClick={() => {
-                      setShowUpdateForm(true);
                       handleUpdate(hospital.hospital_id);
                     }}
                   >
                     Edit
                   </button>
-                  <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4">
+                  <button
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+                    onClick={() => handleDelete(hospital.hospital_id)}
+                  >
                     Delete
                   </button>
                 </td>
