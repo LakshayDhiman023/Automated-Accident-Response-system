@@ -3,10 +3,11 @@ import mysql from 'mysql'
 // var mysql      = require('mysql');
 
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
+  host     : 'dbms202211043.mysql.database.azure.com',
+  user     : 'LakshayDhiman',
   password : 'L@kshay.07',
-  database : 'accident_response_system'
+  database : 'accident_response_system',
+  ssl : true
 });
  
 
